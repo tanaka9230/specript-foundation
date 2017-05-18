@@ -45,7 +45,7 @@ public class IntegerOps {
         } else if (arg instanceof Double) {
             return from((Double)arg);
         } else {
-            throw new UnsupportedOperationException(String.format("`IntegerOps::from` does not support the data type: %s", arg.getClass().getName()));
+            throw new UnsupportedOperationException(String.format("`IntegerOps::from` does not support the value type: %s", arg.getClass().getName()));
         }
     }
 

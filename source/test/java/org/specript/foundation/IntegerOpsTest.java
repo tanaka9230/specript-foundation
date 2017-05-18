@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import java.io.Serializable;
+import java.math.BigInteger;
 
 public class IntegerOpsTest {
     @Test
@@ -161,6 +162,30 @@ public class IntegerOpsTest {
                 fail();
             } catch (final ArithmeticException e) {
                 assertEquals("integer overflow", e.getMessage());
+            }
+        }
+    }
+
+    @Test
+    public void case_fromBigInteger() {
+        {
+            final BigInteger arg = null;
+            final Integer ret = from(arg);
+            assertNull(ret);
+        }
+        {
+            final BigInteger arg = BigInteger.valueOf(Integer.MAX_VALUE);
+            final Integer ret = from(arg);
+            assertEquals(Integer.valueOf(Integer.MAX_VALUE), ret);
+        }
+        {
+            final BigInteger arg = BigInteger.valueOf(Integer.MAX_VALUE).add(BigInteger.ONE);
+            try {
+                @SuppressWarnings("unused")
+                final Integer ret = from(arg);
+                fail();
+            } catch (final ArithmeticException e) {
+                assertEquals("BigInteger out of int range", e.getMessage());
             }
         }
     }

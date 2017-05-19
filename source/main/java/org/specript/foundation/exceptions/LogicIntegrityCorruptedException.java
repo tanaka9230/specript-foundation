@@ -10,7 +10,7 @@ package org.specript.foundation.exceptions;
 
 public class LogicIntegrityCorruptedException extends RuntimeException {
     public LogicIntegrityCorruptedException() {
-        super("IT CAN'T BE!");
+        super("CAN'T BE!");
     }
 
     public LogicIntegrityCorruptedException(final String aMessage) {

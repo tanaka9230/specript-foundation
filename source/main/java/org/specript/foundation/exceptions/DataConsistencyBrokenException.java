@@ -10,7 +10,7 @@ package org.specript.foundation.exceptions;
 
 public class DataConsistencyBrokenException extends RuntimeException {
     public DataConsistencyBrokenException() {
-        super("TOO BAD!");
+        super("NO WAY!");
     }
 
     public DataConsistencyBrokenException(final String aMessage) {

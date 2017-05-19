@@ -10,9 +10,9 @@
 
     <parent>
         <groupId>org.specript</groupId>
-        <artifactId>specript-parent</artifactId>
+        <artifactId>specript-parent-pom</artifactId>
         <version>0.0-SNAPSHOT</version>
-        <relativePath>../specript-parent</relativePath>
+        <relativePath>../specript-parent-pom</relativePath>
     </parent>
 
     <dependencies>
@@ -30,15 +30,4 @@
             <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
-
-    <repositories>
-<!--
-        <repository>
-            <id>maven.central.non-secure</id>
-            <name>Non-secure Maven Central Repository</name>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
--->
-    </repositories>
-
 </project>

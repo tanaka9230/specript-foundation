@@ -60,7 +60,7 @@ public class BooleanOps {
      *         {@code true} when the argument is a string of "true"
      *         (case-ignoring), {@code false} when the argument is a
      *         string of "false" (case-ignoring)
-     * 
+     *
      * @exception NumberFormatException
      *                the argument does not represent a boolean value
      *

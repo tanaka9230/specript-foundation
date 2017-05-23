@@ -34,6 +34,8 @@ public class LongOps {
             return null;
         } else if (arg instanceof String) {
             return from((String)arg);
+        } else if (arg instanceof Boolean) {
+            return from((Boolean)arg);
         } else if (arg instanceof Integer) {
             return from((Integer)arg);
         } else if (arg instanceof Long) {
@@ -51,6 +53,14 @@ public class LongOps {
 
     public static Long from(final String arg) throws ArithmeticException, NumberFormatException {
         return exists(arg) ? Long.valueOf(new BigDecimal(arg).longValueExact()) : null;
+    }
+
+    public static Long from(final boolean arg) {
+        return arg ? Long.valueOf(1L) : Long.valueOf(0L);
+    }
+
+    public static Long from(final Boolean arg) {
+        return arg != null ? from(arg.booleanValue()) : null;
     }
 
     public static Long from(final int arg) {

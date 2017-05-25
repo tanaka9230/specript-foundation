@@ -2,7 +2,7 @@
 
   --+ Specript Foundation Library v3.0 +--
 
-  Copyright (c) 2007-2016, Koichi Tanaka (@Tanaka9230)
+  Copyright (c) 2007-2017, Koichi Tanaka (@Tanaka9230)
 
     ---------------------------====================================== */
 
@@ -23,6 +23,13 @@ import java.math.BigInteger;
  *
  **********************************************************************/
 public class LongOps {
+    public static final Long ZERO = Long.valueOf(0L);
+    public static final Long ONE = Long.valueOf(1L);
+
+    //
+    //
+    //
+
     /*
      * to prevent to be called.
      */
@@ -56,7 +63,7 @@ public class LongOps {
     }
 
     public static Long from(final boolean arg) {
-        return arg ? Long.valueOf(1L) : Long.valueOf(0L);
+        return arg ? ONE : ZERO;
     }
 
     public static Long from(final Boolean arg) {
@@ -64,7 +71,7 @@ public class LongOps {
     }
 
     public static Long from(final int arg) {
-        return Long.valueOf((long)arg);
+        return Long.valueOf(arg);
     }
 
     public static Long from(final Integer arg) {

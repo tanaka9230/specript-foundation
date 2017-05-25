@@ -2,7 +2,7 @@
 
   --+ Specript Foundation Library v3.0 +--
 
-  Copyright (c) 2007-2016, Koichi Tanaka (@Tanaka9230)
+  Copyright (c) 2007-2017, Koichi Tanaka (@Tanaka9230)
 
     ---------------------------====================================== */
 
@@ -23,6 +23,13 @@ import java.math.BigInteger;
  *
  **********************************************************************/
 public class IntegerOps {
+    public static final Integer ZERO = Integer.valueOf(0);
+    public static final Integer ONE = Integer.valueOf(1);
+
+    //
+    //
+    //
+
     /*
      * to prevent to be called.
      */
@@ -56,7 +63,7 @@ public class IntegerOps {
     }
 
     public static Integer from(final boolean arg) {
-        return arg ? Integer.valueOf(1) : Integer.valueOf(0);
+        return arg ? ONE : ZERO;
     }
 
     public static Integer from(final Boolean arg) {

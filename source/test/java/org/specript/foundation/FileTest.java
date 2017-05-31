@@ -17,9 +17,10 @@ public class FileTest {
                 Charset.forName("Shift-JIS"),
                 false //
         );
-        final BufferedReader theReader = File.with(theFileSetting).asReader();
-        final String got = BufferedReaderOps.toString(theReader, "\n");
-        assertEquals("エンコードSHIFT-JIS、\n改行コードCR+LF\nのテキストファイルです。\n\n↑に空行があります。\n", got);
+        try (final BufferedReader theReader = File.with(theFileSetting).asReader()) {
+            final String got = BufferedReaderOps.toString(theReader, "\n");
+            assertEquals("エンコードSHIFT-JIS、\n改行コードCR+LF\nのテキストファイルです。\n\n↑に空行があります。\n", got);
+        }
     }
 
     @Test

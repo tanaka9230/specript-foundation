@@ -8,20 +8,20 @@
 
 package org.specript.foundation.exceptions;
 
-public class InsufficientConfigurationException extends RuntimeException {
-    public InsufficientConfigurationException() {
+public class ConfigurationInsufficientException extends RuntimeException {
+    public ConfigurationInsufficientException() {
         super("OOPS!");
     }
 
-    public InsufficientConfigurationException(final String aMessage) {
+    public ConfigurationInsufficientException(final String aMessage) {
         super(aMessage);
     }
 
-    public InsufficientConfigurationException(final Throwable aCause) {
+    public ConfigurationInsufficientException(final Throwable aCause) {
         super(aCause);
     }
 
-    public InsufficientConfigurationException(final String aMessage, final Throwable aCause) {
+    public ConfigurationInsufficientException(final String aMessage, final Throwable aCause) {
         super(aMessage, aCause);
     }
 }

@@ -8,10 +8,13 @@
 
 package org.specript.foundation;
 
+import static org.specript.foundation.FileSettings.WritingMode.DEFAULT;
+import static org.specript.foundation.Ops.exists;
 import static org.specript.foundation.Ops.mandatory;
 import static org.specript.foundation.Ops.optional;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import java.io.Serializable;
@@ -21,28 +24,77 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
 public class FileSettings implements Serializable {
+    public static enum WritingMode {
+        /** error when already exists **/
+        DEFAULT,
+        /** to overwrite when already exists **/
+        OVERWRITING,
+        /** to append when already exists **/
+        APPENDING;
+
+        //
+        //
+        //
+
+        public static WritingMode from(final String arg) throws IllegalArgumentException {
+            return exists(arg) ? valueOf(arg.toUpperCase()) : null;
+        }
+    }
+
+    //
+    //
+    //
+
     final java.io.File File;
     final Path Path;
     final Charset Charset;
-    final boolean appending;
+    final WritingMode WritingMode;
     final OpenOption[] OpenOptions;
 
-    public FileSettings(final String aFileNamePath, final Charset itsCharset, final boolean appending) {
-        this(new java.io.File(mandatory(aFileNamePath)), itsCharset, appending);
+    /**********************************************************************
+     *
+     * constructs the {@code FileSettings}.
+     *
+     * @throws IllegalArgumentException
+     *             {@code aFileNamePath} is null or empty, or doesn't
+     *             represent the valid file path
+     *
+     **********************************************************************/
+    public FileSettings(final String aFileNamePath, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
+        this(new java.io.File(mandatory(aFileNamePath)), itsCharset, itsWritingMode);
     }
 
-    public FileSettings(final java.io.File aFile, final Charset itsCharset, final boolean appending) {
+    /**********************************************************************
+     *
+     * constructs the {@code FileSettings}.
+     *
+     * @throws IllegalArgumentException
+     *             {@code aFile} is null or doesn't represent the valid
+     *             file path
+     *
+     **********************************************************************/
+    public FileSettings(final java.io.File aFile, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
         File = mandatory(aFile);
         Path = this.File.toPath();
         Charset = optional(itsCharset).orElse(StandardCharsets.UTF_8);
-        this.appending = appending;
-        OpenOptions = theOpenOptions(appending);
+        WritingMode = optional(itsWritingMode).orElse(DEFAULT);
+        OpenOptions = theOpenOptions(this.WritingMode);
     }
 
-    private static OpenOption[] theOpenOptions(final boolean appending) {
-        return new OpenOption[] {
-            WRITE, CREATE,
-            appending ? APPEND : TRUNCATE_EXISTING
-        };
+    private static OpenOption[] theOpenOptions(final WritingMode aWritingMode) {
+        switch (aWritingMode) {
+            case OVERWRITING:
+                return new OpenOption[] {
+                    WRITE, CREATE, TRUNCATE_EXISTING
+                };
+            case APPENDING:
+                return new OpenOption[] {
+                    WRITE, CREATE, APPEND
+                };
+            default:
+                return new OpenOption[] {
+                    WRITE, CREATE_NEW
+                };
+        }
     }
 }

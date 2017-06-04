@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.util.List;
 
 public class File {
-    public static File with(final FileSettings aFileSetting) {
+    public static File with(final FileSettings aFileSetting) throws IllegalArgumentException {
         return new File(aFileSetting);
     }
 
@@ -26,7 +26,7 @@ public class File {
 
     private final FileSettings thisFileSettings;
 
-    private File(final FileSettings aFileSetting) {
+    private File(final FileSettings aFileSetting) throws IllegalArgumentException {
         thisFileSettings = mandatory(aFileSetting);
     }
 
@@ -35,7 +35,7 @@ public class File {
             return Files.newBufferedReader(thisFileSettings.Path, thisFileSettings.Charset);
         } catch (final IOException e) {
             throw e;
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             throw new IOException(e);
         }
     }
@@ -45,7 +45,7 @@ public class File {
             return Files.readAllLines(thisFileSettings.Path, thisFileSettings.Charset);
         } catch (final IOException e) {
             throw e;
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             throw new IOException(e);
         }
     }
@@ -56,7 +56,7 @@ public class File {
             return Files.newBufferedWriter(thisFileSettings.Path, thisFileSettings.Charset, thisFileSettings.OpenOptions);
         } catch (final IOException e) {
             throw e;
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             throw new IOException(e);
         }
     }

@@ -4,15 +4,22 @@ package org.specript.foundation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.specript.foundation.FileSettings.WritingMode;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileTest {
+    @BeforeClass
+    public static void setup() {
+        FileSettings.defaultCharset = StandardCharsets.UTF_8;
+    }
+
     @Test
     public void case_asReader_Succeeded() throws IOException {
         final FileSettings theFileSettings = new FileSettings(

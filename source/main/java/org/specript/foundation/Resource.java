@@ -116,7 +116,7 @@ public class Resource {
         final URI theResourceUri = asUri();
         try {
             return Paths.get(theResourceUri);
-        } catch (final FileSystemNotFoundException e) {
+        } catch (final FileSystemNotFoundException e) { // FileSystemNotFoundException is a subclass of RuntimeException
             throw MissingResourceExceptionOps.with(String.format("can't access the resource '%s'", theResourceUri.toString()), e);
         } catch (final RuntimeException e) {
             throw MissingResourceExceptionOps.with(String.format("can't access the resource '%s'", theResourceUri.toString()), e);

@@ -15,7 +15,7 @@ import java.math.BigInteger;
 
 /**********************************************************************
  *
- * Auxiliary Operations for Long.
+ * Supplementary Operations for Long.
  *
  * <p>
  * All methods are null-safe.

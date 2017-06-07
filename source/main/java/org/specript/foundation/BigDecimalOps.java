@@ -15,7 +15,7 @@ import java.math.BigInteger;
 
 /**********************************************************************
  *
- * Auxiliary Operations for BigDecimal.
+ * Supplementary Operations for BigDecimal.
  *
  * <p>
  * All methods are null-safe.

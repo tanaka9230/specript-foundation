@@ -15,7 +15,7 @@ import java.math.BigInteger;
 
 /**********************************************************************
  *
- * Auxiliary Operations for Boolean.
+ * Supplementary Operations for Boolean.
  *
  * <p>
  * All methods are null-safe.

@@ -19,7 +19,6 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
@@ -45,38 +44,26 @@ public class FileSettings implements Serializable {
     //
     //
 
+    public static Charset defaultCharset = null;
+
+    //
+    //
+    //
+
     final java.io.File File;
     final Path Path;
     final Charset Charset;
     final WritingMode WritingMode;
     final OpenOption[] OpenOptions;
 
-    /**********************************************************************
-     *
-     * constructs the {@code FileSettings}.
-     *
-     * @throws IllegalArgumentException
-     *             {@code aFileNamePath} is null or empty, or doesn't
-     *             represent the valid file path
-     *
-     **********************************************************************/
     public FileSettings(final String aFileNamePath, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
         this(new java.io.File(mandatory(aFileNamePath)), itsCharset, itsWritingMode);
     }
 
-    /**********************************************************************
-     *
-     * constructs the {@code FileSettings}.
-     *
-     * @throws IllegalArgumentException
-     *             {@code aFile} is null or doesn't represent the valid
-     *             file path
-     *
-     **********************************************************************/
     public FileSettings(final java.io.File aFile, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
         File = mandatory(aFile);
-        Path = this.File.toPath();
-        Charset = optional(itsCharset).orElse(StandardCharsets.UTF_8);
+        Path = this.File.toPath(); // `toPath` may throw java.nio.file.InvalidPathException which is a subclass of IllegalArgumentException
+        Charset = mandatory(optional(itsCharset).orElse(defaultCharset));
         WritingMode = optional(itsWritingMode).orElse(DEFAULT);
         OpenOptions = theOpenOptions(this.WritingMode);
     }

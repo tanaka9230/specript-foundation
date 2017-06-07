@@ -68,8 +68,8 @@ public class FileSettingsOps {
         }
     }
 
-    private static final String FILE_PATH_SETTING_NAME = "file_path";
-    private static final String RESOURCE_NAME_PATH_SETTING_NAME = "resource_name_path";
-    private static final String ENCODING_SETTING_NAME = "encoding";
-    private static final String WRITING_MODE_SETTING_NAME = "writing_mode";
+    private static final String FILE_PATH_SETTING_NAME = "FilePath";
+    private static final String RESOURCE_NAME_PATH_SETTING_NAME = "ResourceNamePath";
+    private static final String ENCODING_SETTING_NAME = "Encoding";
+    private static final String WRITING_MODE_SETTING_NAME = "WritingMode";
 }

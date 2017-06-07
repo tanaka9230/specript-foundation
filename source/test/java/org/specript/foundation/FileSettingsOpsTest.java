@@ -5,10 +5,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.specript.foundation.FileSettings.WritingMode;
 import org.specript.foundation.exceptions.InvalidSettingsException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class FileSettingsOpsTest {
+    @BeforeClass
+    public static void setup() {
+        FileSettings.defaultCharset = StandardCharsets.UTF_8;
+    }
+
     @Test
     public void case_fromProperties_SetFilePath_and_DefaultEncoding_DefaultWritingMode_then_Succeeded() {
         final FileSettings theFileSettings = FileSettingsOps.fromProperties(Resource.forName("org/specript/foundation/FileSettingsOpsTest1.properties").asProperties());
@@ -50,7 +57,7 @@ public class FileSettingsOpsTest {
             FileSettingsOps.fromProperties(Resource.forName("org/specript/foundation/FileSettingsOpsTest5.properties").asProperties());
             fail();
         } catch (final InvalidSettingsException e) {
-            assertEquals("org.specript.foundation.exceptions.InvalidSettingsException: neither 'file_path' nor 'resource_name_path' were set", e.toString());
+            assertEquals("org.specript.foundation.exceptions.InvalidSettingsException: neither 'FilePath' nor 'ResourceNamePath' were set", e.toString());
         }
     }
 
@@ -70,6 +77,7 @@ public class FileSettingsOpsTest {
             FileSettingsOps.fromProperties(Resource.forName("org/specript/foundation/FileSettingsOpsTest7.properties").asProperties());
             fail();
         } catch (final InvalidSettingsException e) {
+            e.printStackTrace();
             assertEquals("org.specript.foundation.exceptions.InvalidSettingsException: java.lang.IllegalArgumentException: No enum constant org.specript.foundation.FileSettings.WritingMode.HOGEHOGE", e.toString());
         }
     }

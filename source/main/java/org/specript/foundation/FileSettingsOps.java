@@ -16,6 +16,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+/**********************************************************************
+ *
+ * Supplementary Operations for {@link FileSettings}.
+ *
+ **********************************************************************/
 public class FileSettingsOps {
     /*
      * to prevent to be called
@@ -39,6 +44,23 @@ public class FileSettingsOps {
         return new FileSettings(aFilePathName, itsCharset, itsWritingMode);
     }
 
+    /**********************************************************************
+     *
+     * obtains the {@link FileSettings}, that comes from the
+     * {@link Properties}.
+     *
+     * @param someProperties
+     *            source {@link Properties}
+     * 
+     * @return obtained {@link FileSettings}
+     * 
+     * @throws InvalidSettingsException
+     *             content of the {@link Properties} was immature to be
+     *             read as a {@link FileSettings}; some mandatory
+     *             setting is missing, format of the entry is invalid,
+     *             etc.
+     *
+     **********************************************************************/
     public static FileSettings fromProperties(final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
         mandatory(aFileSettingsProperties);
         try {

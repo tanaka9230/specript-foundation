@@ -16,8 +16,8 @@ import java.nio.file.Files;
 import java.util.List;
 
 public class File {
-    public static File with(final FileSettings aFileSetting) throws IllegalArgumentException {
-        return new File(aFileSetting);
+    public static File with(final FileSettings someFileSettings) throws IllegalArgumentException {
+        return new File(someFileSettings);
     }
 
     //
@@ -26,8 +26,8 @@ public class File {
 
     private final FileSettings thisFileSettings;
 
-    private File(final FileSettings aFileSetting) throws IllegalArgumentException {
-        thisFileSettings = mandatory(aFileSetting);
+    private File(final FileSettings someFileSettings) throws IllegalArgumentException {
+        thisFileSettings = mandatory(someFileSettings);
     }
 
     public BufferedReader asReader() throws IOException {

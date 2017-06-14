@@ -19,23 +19,23 @@ public class FileSettingsOpsTest {
     @Test
     public void case_fromProperties_SetFilePath_and_DefaultEncoding_DefaultWritingMode_then_Succeeded() {
         final FileSettings theFileSettings = FileSettingsOps.fromProperties(Resource.forName("org/specript/foundation/FileSettingsOpsTest1.properties").asProperties());
-        assertEquals(new java.io.File("/var/tmp/test/org.specript.foundation.TestFile.txt").toString(), theFileSettings.File.toString());
-        assertEquals(Charset.forName("UTF-8"), theFileSettings.Charset);
-        assertEquals(WritingMode.DEFAULT, theFileSettings.WritingMode);
+        assertEquals(new java.io.File("/var/tmp/test/org.specript.foundation.TestFile.txt").toString(), theFileSettings.File().toString());
+        assertEquals(Charset.forName("UTF-8"), theFileSettings.Charset());
+        assertEquals(WritingMode.DEFAULT, theFileSettings.WritingMode());
     }
 
     @Test
     public void case_fromProperties_SetResourceNamePath_and_SetEncodingAndWritingMode_then_Succeeded() {
         final FileSettings theFileSettings = FileSettingsOps.fromProperties(Resource.forName("org/specript/foundation/FileSettingsOpsTest2.properties").asProperties());
-        assertEquals(Resource.forName("org/specript/foundation/TestResourceFile.txt").asFile().toString(), theFileSettings.File.toString());
-        assertEquals(Charset.forName("Shift-JIS"), theFileSettings.Charset);
-        assertEquals(WritingMode.APPENDING, theFileSettings.WritingMode);
+        assertEquals(Resource.forName("org/specript/foundation/TestResourceFile.txt").asFile().toString(), theFileSettings.File().toString());
+        assertEquals(Charset.forName("Shift-JIS"), theFileSettings.Charset());
+        assertEquals(WritingMode.APPENDING, theFileSettings.WritingMode());
     }
 
     @Test
     public void case_fromProperties_SetNotExistingFilePath_then_Succeeded() {
         final FileSettings theFileSettings = FileSettingsOps.fromProperties(Resource.forName("org/specript/foundation/FileSettingsOpsTest3.properties").asProperties());
-        assertEquals(new java.io.File("/var/tmp/test/org.specript.foundation.NotFound.txt").toString(), theFileSettings.File.toString());
+        assertEquals(new java.io.File("/var/tmp/test/org.specript.foundation.NotFound.txt").toString(), theFileSettings.File().toString());
         // no error occurs when the file specified with 'file_path' does not exist
     }
 

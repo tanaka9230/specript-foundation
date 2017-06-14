@@ -32,7 +32,7 @@ public class File {
 
     public BufferedReader asReader() throws IOException {
         try {
-            return Files.newBufferedReader(thisFileSettings.Path, thisFileSettings.Charset);
+            return Files.newBufferedReader(thisFileSettings.Path(), thisFileSettings.Charset());
         } catch (final IOException e) {
             throw e;
         } catch (final RuntimeException e) {
@@ -42,7 +42,7 @@ public class File {
 
     public List<String> asLines() throws IOException {
         try {
-            return Files.readAllLines(thisFileSettings.Path, thisFileSettings.Charset);
+            return Files.readAllLines(thisFileSettings.Path(), thisFileSettings.Charset());
         } catch (final IOException e) {
             throw e;
         } catch (final RuntimeException e) {
@@ -52,8 +52,8 @@ public class File {
 
     public BufferedWriter asWriter() throws IOException {
         try {
-            Files.createDirectories(thisFileSettings.Path.getParent());
-            return Files.newBufferedWriter(thisFileSettings.Path, thisFileSettings.Charset, thisFileSettings.OpenOptions);
+            Files.createDirectories(thisFileSettings.Path().getParent());
+            return Files.newBufferedWriter(thisFileSettings.Path(), thisFileSettings.Charset(), thisFileSettings.OpenOptions());
         } catch (final IOException e) {
             throw e;
         } catch (final RuntimeException e) {

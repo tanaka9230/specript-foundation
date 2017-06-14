@@ -8,7 +8,6 @@
 
 package org.specript.foundation;
 
-import static org.specript.foundation.FileSettings.WritingMode.DEFAULT;
 import static org.specript.foundation.Ops.exists;
 import static org.specript.foundation.Ops.mandatory;
 import static org.specript.foundation.Ops.optional;
@@ -50,22 +49,22 @@ public class FileSettings implements Serializable {
     //
     //
 
-    final java.io.File File;
-    final Path Path;
-    final Charset Charset;
-    final WritingMode WritingMode;
-    final OpenOption[] OpenOptions;
+    private final java.io.File thisFile;
+    private final Path thisPath;
+    private final Charset thisCharset;
+    private final WritingMode thisWritingMode;
+    private final OpenOption[] thisOpenOptions;
 
     public FileSettings(final String aFileNamePath, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
         this(new java.io.File(mandatory(aFileNamePath)), itsCharset, itsWritingMode);
     }
 
     public FileSettings(final java.io.File aFile, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
-        File = mandatory(aFile);
-        Path = this.File.toPath(); // `toPath` may throw java.nio.file.InvalidPathException which is a subclass of IllegalArgumentException
-        Charset = mandatory(optional(itsCharset).orElse(defaultCharset));
-        WritingMode = optional(itsWritingMode).orElse(DEFAULT);
-        OpenOptions = theOpenOptions(this.WritingMode);
+        thisFile = mandatory(aFile);
+        thisPath = thisFile.toPath(); // `toPath` may throw java.nio.file.InvalidPathException which is a subclass of IllegalArgumentException
+        thisCharset = mandatory(optional(itsCharset).orElse(defaultCharset));
+        thisWritingMode = optional(itsWritingMode).orElse(WritingMode.DEFAULT);
+        thisOpenOptions = theOpenOptions(thisWritingMode);
     }
 
     private static OpenOption[] theOpenOptions(final WritingMode aWritingMode) {
@@ -83,5 +82,25 @@ public class FileSettings implements Serializable {
                     WRITE, CREATE_NEW
                 };
         }
+    }
+
+    java.io.File File() {
+        return thisFile;
+    };
+
+    Path Path() {
+        return thisPath;
+    };
+
+    Charset Charset() {
+        return thisCharset;
+    };
+
+    WritingMode WritingMode() {
+        return thisWritingMode;
+    };
+
+    OpenOption[] OpenOptions() {
+        return thisOpenOptions;
     }
 }

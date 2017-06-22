@@ -10,23 +10,22 @@ package org.specript.foundation;
 
 import static org.specript.foundation.Ops.mandatory;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-public class File {
-    public static File with(final FileSettings someFileSettings) throws IllegalArgumentException {
-        return new File(someFileSettings);
+public class ReadFile {
+    public static ReadFile with(final ReadFileSettings someFileSettings) throws IllegalArgumentException {
+        return new ReadFile(someFileSettings);
     }
 
     //
     //
     //
 
-    private final FileSettings thisFileSettings;
+    private final ReadFileSettings thisFileSettings;
 
-    private File(final FileSettings someFileSettings) throws IllegalArgumentException {
+    private ReadFile(final ReadFileSettings someFileSettings) throws IllegalArgumentException {
         thisFileSettings = mandatory(someFileSettings);
     }
 
@@ -43,17 +42,6 @@ public class File {
     public List<String> asLines() throws IOException {
         try {
             return Files.readAllLines(thisFileSettings.Path(), thisFileSettings.Charset());
-        } catch (final IOException e) {
-            throw e;
-        } catch (final RuntimeException e) {
-            throw new IOException(e);
-        }
-    }
-
-    public BufferedWriter asWriter() throws IOException {
-        try {
-            Files.createDirectories(thisFileSettings.Path().getParent());
-            return Files.newBufferedWriter(thisFileSettings.Path(), thisFileSettings.Charset(), thisFileSettings.OpenOptions());
         } catch (final IOException e) {
             throw e;
         } catch (final RuntimeException e) {

@@ -16,12 +16,14 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import java.io.File;
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
-public class FileSettings implements Serializable {
+class WriteFileSettings implements Serializable {
     public static enum WritingMode {
         /** error when already exists **/
         DEFAULT,
@@ -43,26 +45,20 @@ public class FileSettings implements Serializable {
     //
     //
 
-    public static Charset defaultCharset = null;
-
-    //
-    //
-    //
-
-    private final java.io.File thisFile;
+    private final File thisFile;
     private final Path thisPath;
     private final Charset thisCharset;
     private final WritingMode thisWritingMode;
     private final OpenOption[] thisOpenOptions;
 
-    public FileSettings(final String aFileNamePath, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
-        this(new java.io.File(mandatory(aFileNamePath)), itsCharset, itsWritingMode);
+    public WriteFileSettings(final String aFileNamePath, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
+        this(new File(mandatory(aFileNamePath)), itsCharset, itsWritingMode);
     }
 
-    public FileSettings(final java.io.File aFile, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
+    public WriteFileSettings(final File aFile, final Charset itsCharset, final WritingMode itsWritingMode) throws IllegalArgumentException {
         thisFile = mandatory(aFile);
         thisPath = thisFile.toPath(); // `toPath` may throw java.nio.file.InvalidPathException which is a subclass of IllegalArgumentException
-        thisCharset = mandatory(optional(itsCharset).orElse(defaultCharset));
+        thisCharset = optional(itsCharset).orElse(StandardCharsets.UTF_8);
         thisWritingMode = optional(itsWritingMode).orElse(WritingMode.DEFAULT);
         thisOpenOptions = theOpenOptions(thisWritingMode);
     }
@@ -84,7 +80,7 @@ public class FileSettings implements Serializable {
         }
     }
 
-    java.io.File File() {
+    File File() {
         return thisFile;
     };
 

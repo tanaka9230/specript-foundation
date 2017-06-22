@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 
-class WriteFileSettings implements Serializable {
+public class WriteFileSettings implements Serializable {
     public static enum WritingMode {
         /** error when already exists **/
         DEFAULT,

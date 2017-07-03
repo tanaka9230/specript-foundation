@@ -15,7 +15,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -37,11 +36,11 @@ import java.util.function.Supplier;
  *
  **********************************************************************/
 public class Resource {
-    public static Resource forName(final String aResourceNamePath) throws MissingResourceException {
+    public static Resource forName(final String aResourceNamePath) throws MissingResourceException, IllegalArgumentException {
         return new Resource(aResourceNamePath, () -> Thread.currentThread().getContextClassLoader());
     }
 
-    public static Resource forName(final String aResourceNamePath, final ClassLoader theClassLoader) throws MissingResourceException {
+    public static Resource forName(final String aResourceNamePath, final ClassLoader theClassLoader) throws MissingResourceException, IllegalArgumentException {
         return new Resource(aResourceNamePath, () -> theClassLoader);
     }
 
@@ -55,7 +54,7 @@ public class Resource {
     private final String thisResourceNamePath;
     private final URL thisUrl;
 
-    private Resource(final String aResourceNamePath, final Supplier<ClassLoader> theClassLoader) throws MissingResourceException {
+    private Resource(final String aResourceNamePath, final Supplier<ClassLoader> theClassLoader) throws MissingResourceException, IllegalArgumentException {
         thisClassLoader = mandatory(theClassLoader);
         //
         thisResourceNamePath = mandatory(aResourceNamePath);
@@ -132,7 +131,7 @@ public class Resource {
         final Path theResourcePath = asPath();
         try {
             return Files.newInputStream(theResourcePath);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw MissingResourceExceptionOps.with(e);
         } catch (final RuntimeException e) {
             throw MissingResourceExceptionOps.with(e);
@@ -157,7 +156,7 @@ public class Resource {
         final Path theResourcePath = asPath();
         try {
             return Files.newBufferedReader(theResourcePath, aCharset);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw MissingResourceExceptionOps.with(e);
         } catch (final RuntimeException e) {
             throw MissingResourceExceptionOps.with(e);
@@ -185,7 +184,7 @@ public class Resource {
         try {
             final List<String> ret = Files.readAllLines(theResourcePath, aCharset);
             return ret;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw MissingResourceExceptionOps.with(e);
         } catch (final RuntimeException e) {
             throw MissingResourceExceptionOps.with(e);
@@ -207,16 +206,12 @@ public class Resource {
      *
      **********************************************************************/
     public Properties asProperties(final Charset aCharset) throws MissingResourceException {
-        final Properties ret = new Properties();
-        try (Reader theReader = asReader(aCharset)) {
-            ret.load(theReader);
-        } catch (MissingResourceException e) {
-            throw e;
-        } catch (IOException e) {
+        try {
+            return PropertiesOps.from(asReader(aCharset));
+        } catch (final IOException e) {
             throw MissingResourceExceptionOps.with(e);
         } catch (final RuntimeException e) {
             throw MissingResourceExceptionOps.with(e);
         }
-        return ret;
     }
 }

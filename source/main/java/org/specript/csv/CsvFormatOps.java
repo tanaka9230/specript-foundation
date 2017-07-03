@@ -34,16 +34,16 @@ public class CsvFormatOps {
      *
      * @param someProperties
      *            source {@link Properties}
-     * 
+     *
      * @return obtained {@link CsvFormat}
-     * 
+     *
      * @throws InvalidSettingsException
      *             content of the {@link Properties} was immature to be
      *             read as a {@link CsvFormat}; some mandatory setting
      *             is missing, format of the entry is invalid, etc.
      *
      **********************************************************************/
-    public static CsvFormat fromProperties(final Properties someProperties) throws InvalidSettingsException, IllegalArgumentException {
+    public static CsvFormat from(final Properties someProperties) throws InvalidSettingsException, IllegalArgumentException {
         mandatory(someProperties);
         try {
             final char theDelimiter =
@@ -53,6 +53,9 @@ public class CsvFormatOps {
                             .charValue();
             final String theLineSeparator =
                     mandatory(someProperties.getProperty(LINE_SEPARATOR_SETTING_NAME), true);
+            final String theNullString =
+                    optional(someProperties.getProperty(NULL_STRING_SETTING_NAME), true)
+                            .orElse(DEFAULT_NULL_STRING);
             final boolean trimming =
                     optional(someProperties.getProperty(TRIMMING_SETTING_NAME))
                             .map(BooleanOps::from)
@@ -65,7 +68,7 @@ public class CsvFormatOps {
                             .booleanValue();
             final String[] theFieldNames =
                     mandatory(StringOps.split(someProperties.getProperty(FIELDS_SETTING_NAME), "\\,"));
-            return new CsvFormat(theDelimiter, theLineSeparator, trimming, handlingHeader, theFieldNames);
+            return new CsvFormat(theDelimiter, theLineSeparator, theNullString, trimming, handlingHeader, theFieldNames);
         } catch (final InvalidSettingsException e) {
             throw e;
         } catch (final RuntimeException e) {
@@ -82,9 +85,11 @@ public class CsvFormatOps {
     }
 
     private static final char DEFAULT_DELIMITER = ',';
+    private static final String DEFAULT_NULL_STRING = "";
 
     private static final String DELIMITER_SETTING_NAME = "Delimiter";
     private static final String LINE_SEPARATOR_SETTING_NAME = "LineSeparator";
+    private static final String NULL_STRING_SETTING_NAME = "NullString";
     private static final String TRIMMING_SETTING_NAME = "trimming";
     private static final String HANDLING_HEADER_SETTING_NAME = "handlingHeader";
     private static final String FIELDS_SETTING_NAME = "Fields";

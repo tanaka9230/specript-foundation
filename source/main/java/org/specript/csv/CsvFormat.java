@@ -13,28 +13,37 @@ import org.apache.commons.csv.CSVFormat;
 import java.io.Serializable;
 
 public class CsvFormat implements Serializable {
+    public static CsvFormat of(final CsvFormatT arg) {
+        return arg.itsCsvFormat(); // TODO
+    }
+
+    //
+    //
+    //
+
     private final char thisDelimiter;
     private final String thisLineSeparator;
+    private final String thisNullString;
     private final boolean trimming;
     private final boolean handlingHeader;
     private final String[] thisFieldNames;
     private final CSVFormat thisFormat;
 
-    public CsvFormat(final char aDelimiter, final String aLineSeparator, final boolean trimming, final boolean handlingHeader, final String[] someFieldNames) throws IllegalArgumentException {
+    public CsvFormat(final char aDelimiter, final String aLineSeparator, final String aNullString, final boolean trimming, final boolean handlingHeader, final String[] someFieldNames) throws IllegalArgumentException {
         thisDelimiter = aDelimiter;
         thisLineSeparator = mandatory(aLineSeparator, true);
+        thisNullString = aNullString != null ? aNullString : "";
         this.trimming = trimming;
         this.handlingHeader = handlingHeader;
         thisFieldNames = mandatory(someFieldNames);
-        thisFormat = theFormat(thisDelimiter, thisLineSeparator, this.trimming, thisFieldNames);
+        thisFormat = theFormat(thisDelimiter, thisLineSeparator, thisNullString, this.trimming, thisFieldNames);
     }
 
-    private static CSVFormat theFormat(final char aDelimiter, final String aLineSeparator, final boolean trimming, final String[] someFieldNames) throws IllegalArgumentException {
+    private static CSVFormat theFormat(final char aDelimiter, final String aLineSeparator, final String aNullString, final boolean trimming, final String[] someFieldNames) throws IllegalArgumentException {
         return CSVFormat.newFormat(aDelimiter)
                 .withRecordSeparator(aLineSeparator)
                 .withIgnoreSurroundingSpaces(trimming).withTrim(trimming)
-                .withNullString("")
-                .withHeader(someFieldNames);
+                .withNullString(aNullString);
     }
 
     char Delimiter() {

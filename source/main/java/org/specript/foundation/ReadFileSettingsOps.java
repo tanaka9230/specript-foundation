@@ -61,11 +61,11 @@ public class ReadFileSettingsOps {
      *             etc.
      *
      **********************************************************************/
-    public static ReadFileSettings fromProperties(final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
-        return fromProperties(null, aFileSettingsProperties);
+    public static ReadFileSettings from(final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
+        return from(null, aFileSettingsProperties);
     }
 
-    public static ReadFileSettings fromProperties(final File aFile, final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
+    public static ReadFileSettings from(final File aFile, final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
         mandatory(aFileSettingsProperties);
         try {
             final File theFile =

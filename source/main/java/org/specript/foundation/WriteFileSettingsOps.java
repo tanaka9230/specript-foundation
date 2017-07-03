@@ -78,11 +78,11 @@ public class WriteFileSettingsOps {
      *             etc.
      *
      **********************************************************************/
-    public static WriteFileSettings fromProperties(final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
-        return fromProperties(null, aFileSettingsProperties);
+    public static WriteFileSettings from(final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
+        return from(null, aFileSettingsProperties);
     }
 
-    public static WriteFileSettings fromProperties(File aFile, final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
+    public static WriteFileSettings from(File aFile, final Properties aFileSettingsProperties) throws InvalidSettingsException, IllegalArgumentException {
         mandatory(aFileSettingsProperties);
         try {
             final File theFile =

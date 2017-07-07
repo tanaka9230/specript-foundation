@@ -1,6 +1,6 @@
 /* ======================================---------------------------
 
-  --+ Specript CSV Library v3.0 +--
+  --+ Specript CSV Utilities v3.0 +--
 
   Copyright (c) 2007-2017, Koichi Tanaka (@Tanaka9230)
 
@@ -13,14 +13,6 @@ import org.apache.commons.csv.CSVFormat;
 import java.io.Serializable;
 
 public class CsvFormat implements Serializable {
-    public static CsvFormat of(final CsvFormatT arg) {
-        return arg.itsCsvFormat(); // TODO
-    }
-
-    //
-    //
-    //
-
     private final char thisDelimiter;
     private final String thisLineSeparator;
     private final String thisNullString;
@@ -68,5 +60,5 @@ public class CsvFormat implements Serializable {
 
     CSVFormat Format() {
         return thisFormat;
-    };
+    }
 }

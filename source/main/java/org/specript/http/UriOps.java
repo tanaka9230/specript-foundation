@@ -1,6 +1,6 @@
 /* ======================================---------------------------
 
-  --+ Specript HTTP Library v3.0 +--
+  --+ Specript HTTP Utilities v3.0 +--
 
   Copyright (c) 2007-2017, Koichi Tanaka (@Tanaka9230)
 
@@ -49,7 +49,8 @@ public class UriOps {
      *            "QUERY_STRING"; can be null
      * @param itsCharset
      *            the charset to be used for the URL encoding of
-     *            "QUERY_STRING"
+     *            "QUERY_STRING"; can be null when
+     *            {@code someQueryParameters} does not exist
      *
      * @throws IllegalArgumentException
      *             couldn't build the valid {@link URI} from the
